@@ -12,16 +12,15 @@ NSString *const HSSelectDateViewDidSelectDateNotification = @"didSelectDateNotif
 NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDissmissSelectDateViewNotification";
 
 @interface HSSelectDateView () {
-    UIDatePicker *datePicker__;
 }
 
-@property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, weak) UIDatePicker *datePicker;
 
 @end
 
 @implementation HSSelectDateView
 
-@synthesize datePicker = datePicker__;
+@synthesize datePicker;
 
 #pragma mark - Selected date
 
@@ -104,14 +103,15 @@ NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDiss
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        
+
         CGRect viewFrame = CGRectZero;
-        self.datePicker = [[UIDatePicker alloc] init];
-        self.datePicker.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
-        self.datePicker.datePickerMode = aDatePickerMode;
-        [self.datePicker sizeToFit];
-        viewFrame = self.datePicker.frame;
-        [self addSubview:self.datePicker];
+        UIDatePicker *picker = [[UIDatePicker alloc] init];
+        picker.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+        picker.datePickerMode = aDatePickerMode;
+        [picker sizeToFit];
+        viewFrame = picker.frame;
+        [self addSubview:picker];
+        self.datePicker = picker;
 
         UIBarButtonItem *barButtonItem = nil;
         NSMutableArray *buttons = [NSMutableArray array];

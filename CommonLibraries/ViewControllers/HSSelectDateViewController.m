@@ -9,27 +9,23 @@
 #import "HSSelectDateViewController.h"
 
 @interface HSSelectDateViewController () {
-    UIPopoverController *popoverController__;
-    NSDate *selectedDate__;
-    UIView *brankView__;
-    HSSelectDateView *selectDateView__;
 }
 
+@property (nonatomic, weak) UIButton *dateButton;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) NSDate *selectedDate;
-@property (nonatomic, strong) UIView *brankView;
-@property (nonatomic, strong) HSSelectDateView *selectDateView;
-
-@property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, weak) UIView *brankView;
+@property (nonatomic, weak) HSSelectDateView *selectDateView;
 
 @end
 
 @implementation HSSelectDateViewController
 
-@synthesize popoverController = popoverController__;
-@synthesize selectedDate = selectedDate__;
-@synthesize brankView = brankView__;
-@synthesize selectDateView = selectDateView__;
+@synthesize dateButton;
+@synthesize popoverController;
+@synthesize selectedDate;
+@synthesize brankView;
+@synthesize selectDateView;
 
 #pragma mark - Select date view control
 
@@ -84,9 +80,12 @@
                name:HSSelectDateViewDidDismissSelectDateViewNotification
              object:NULL];
     if (!self.selectDateView) {
-        self.selectDateView = [[HSSelectDateView alloc] initWithFrame:CGRectZero datePickerMode:UIDatePickerModeDate canChangeDatePickerMode:YES];
+        HSSelectDateView *dateView = [[HSSelectDateView alloc] initWithFrame:CGRectZero datePickerMode:UIDatePickerModeDate canChangeDatePickerMode:YES];
+        self.selectDateView = dateView;
         self.selectDateView.delegate = self;
     }
+    [self.selectDateView setSelectedDate:self.selectedDate animated:NO];
+
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIViewController *vc = [[UIViewController alloc] init];
         [vc.view addSubview:self.selectDateView];
@@ -154,12 +153,14 @@
     [button setTitle:[self stringFromDate:self.selectedDate] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(showSelectDateView:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
-    
-    self.brankView = [[UIView alloc] initWithFrame:self.view.frame];
-    self.brankView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1.0];
-    self.brankView.alpha = 0.3;
-    self.brankView.hidden = YES;
-    [self.view addSubview:self.brankView];
+    self.dateButton = button;
+
+    UIView *dummyView = [[UIView alloc] initWithFrame:self.view.frame];
+    dummyView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1.0];
+    dummyView.alpha = 0.3;
+    dummyView.hidden = YES;
+    [self.view addSubview:dummyView];
+    self.brankView = dummyView;
 }
 
 - (void)didReceiveMemoryWarning
@@ -208,13 +209,16 @@
 {
     NSLog(@"didSelectDateNotification:%@", notification);
     self.selectedDate = [notification object];
+    [self.dateButton setTitle:[self stringFromDate:self.selectedDate] forState:UIControlStateNormal];
 }
 
 - (void)didDismissSelectDateViewNotification:(NSNotification *)notification
 {
     NSLog(@"didDismissSelectDateViewNotification:%@", notification);
     if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
+        if ([self.popoverController isPopoverVisible]) {
+            [self.popoverController dismissPopoverAnimated:YES];
+        }
         [self destroyPopoverController];
     }
     else {
