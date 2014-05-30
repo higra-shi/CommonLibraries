@@ -31,11 +31,13 @@
 
 - (void)destroySelectDateView
 {
-    if (self.selectDateView && [self.selectDateView superview]) {
-        NSLog(@"remove select date view");
-        [self.selectDateView removeFromSuperview];
+    if (self.selectDateView) {
+        self.selectDateView.delegate = nil;
+        if ([self.selectDateView superview]) {
+            NSLog(@"remove select date view");
+            [self.selectDateView removeFromSuperview];
+        }
     }
-    self.selectDateView.delegate = nil;
     self.selectDateView = nil;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -79,8 +81,9 @@
     [nc addObserver:self selector:@selector(didDismissSelectDateViewNotification:)
                name:HSSelectDateViewDidDismissSelectDateViewNotification
              object:NULL];
+    HSSelectDateView *dateView = nil;
     if (!self.selectDateView) {
-        HSSelectDateView *dateView = [[HSSelectDateView alloc] initWithFrame:CGRectZero datePickerMode:UIDatePickerModeDate canChangeDatePickerMode:YES];
+        dateView = [[HSSelectDateView alloc] initWithFrame:self.view.frame datePickerMode:UIDatePickerModeDate canChangeDatePickerMode:YES];
         self.selectDateView = dateView;
         self.selectDateView.delegate = self;
     }
