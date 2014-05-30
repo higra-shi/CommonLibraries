@@ -146,9 +146,9 @@
 
     self.popoverController = nil;
     self.selectDateView = nil;
-    
+
     self.selectedDate = [NSDate date];
-    
+
     CGRect viewFrame = CGRectMake(32, 32, 128, 32);
     viewFrame.origin.y += 44;
     UIButton *button = [[UIButton alloc] initWithFrame:viewFrame];
@@ -162,8 +162,16 @@
     dummyView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1.0];
     dummyView.alpha = 0.3;
     dummyView.hidden = YES;
+    dummyView.autoresizingMask = (1 << 6) - 1;
     [self.view addSubview:dummyView];
     self.brankView = dummyView;
+
+    viewFrame = self.navigationController.navigationBar.frame;
+    viewFrame.origin = CGPointZero;
+    UIView *headerView = [[UIView alloc] initWithFrame:viewFrame];
+    headerView.backgroundColor = [UIColor redColor];
+    headerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.navigationItem setTitleView:headerView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -182,6 +190,25 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    [self.selectDateView setAlpha:0.0];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+    CGRect viewFrame = CGRectZero;
+    viewFrame.size = [self.selectDateView resizeView];
+    viewFrame.origin.y = self.view.frame.size.height - viewFrame.size.height;
+    self.selectDateView.frame = viewFrame;
+
+    [self.selectDateView setAlpha:1.0];
+}
 
 #pragma mark - Touch events
 

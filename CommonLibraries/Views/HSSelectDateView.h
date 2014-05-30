@@ -25,7 +25,7 @@
 - (NSDate *)selectedDate;
 
 - (id)initWithFrame:(CGRect)frame datePickerMode:(UIDatePickerMode)aDatePickerMode canChangeDatePickerMode:(BOOL)canChangeDatePickerMode;
-
+- (CGSize)resizeView;
 
 UIKIT_EXTERN NSString *const HSSelectDateViewDidSelectDateNotification;
 UIKIT_EXTERN NSString *const HSSelectDateViewDidDismissSelectDateViewNotification;

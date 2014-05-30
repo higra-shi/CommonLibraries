@@ -14,13 +14,19 @@ NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDiss
 @interface HSSelectDateView () {
 }
 
+@property (nonatomic, weak) UIToolbar *viewControlToolBar;
 @property (nonatomic, weak) UIDatePicker *datePicker;
+@property (nonatomic, weak) UIToolbar *pickerModeToolBar;
+@property (nonatomic, weak) UISegmentedControl *pickerModeControl;
 
 @end
 
 @implementation HSSelectDateView
 
+@synthesize viewControlToolBar;
 @synthesize datePicker;
+@synthesize pickerModeToolBar;
+@synthesize pickerModeControl;
 
 #pragma mark - Selected date
 
@@ -103,13 +109,16 @@ NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDiss
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.viewControlToolBar = NULL;
+        self.datePicker = NULL;
+        self.pickerModeToolBar = NULL;
+        self.pickerModeControl = NULL;
 
         CGRect viewFrame = CGRectZero;
         UIDatePicker *picker = [[UIDatePicker alloc] init];
         picker.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
         picker.datePickerMode = aDatePickerMode;
         [picker sizeToFit];
-        viewFrame = picker.frame;
         [self addSubview:picker];
         self.datePicker = picker;
 
@@ -134,10 +143,8 @@ NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDiss
         UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:viewFrame];
         [toolBar setItems:buttons];
         [toolBar sizeToFit];
-        viewFrame.size.height = toolBar.frame.size.height;
-        toolBar.frame = viewFrame;
-        viewFrame.origin.y += viewFrame.size.height;
         [self addSubview:toolBar];
+        self.viewControlToolBar = toolBar;
         toolBar = nil;
 
         if (canChangeDatePickerMode) {
@@ -167,8 +174,10 @@ NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDiss
                     break;
             }
             [segmentedControl addTarget:self action:@selector(changeDatePickerMode:) forControlEvents:UIControlEventValueChanged];
+            [segmentedControl sizeToFit];
             barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
             [buttons addObject:barButtonItem];
+            self.pickerModeControl = segmentedControl;
             barButtonItem = nil;
             // flexible space
             barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -179,19 +188,13 @@ NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDiss
             toolBar = [[UIToolbar alloc] initWithFrame:viewFrame];
             [toolBar setItems:buttons];
             [toolBar sizeToFit];
-            viewFrame.size.height = toolBar.frame.size.height;
-            toolBar.frame = viewFrame;
-            viewFrame.origin.y += viewFrame.size.height;
             [self addSubview:toolBar];
+            self.pickerModeToolBar = toolBar;
             toolBar = nil;
         }
 
-        viewFrame.size = self.datePicker.frame.size;
-        self.datePicker.frame = viewFrame;
-
-        viewFrame.size.height += viewFrame.origin.y;
-        viewFrame.origin.y = frame.origin.y;
-        self.frame = viewFrame;
+        frame.size = [self resizeView];
+        self.frame = frame;
     }
     return self;
 }
@@ -209,5 +212,30 @@ NSString *const HSSelectDateViewDidDismissSelectDateViewNotification = @"didDiss
     // Drawing code
 }
 */
+
+- (CGSize)resizeView
+{
+    CGRect viewFrame = CGRectZero;
+    [self.datePicker sizeToFit];
+    viewFrame.size = self.datePicker.frame.size;
+
+    [self.viewControlToolBar sizeToFit];
+    viewFrame.size.height = self.viewControlToolBar.frame.size.height;
+    self.viewControlToolBar.frame = viewFrame;
+    viewFrame.origin.y += viewFrame.size.height;
+
+    if (self.pickerModeToolBar) {
+        [self.pickerModeToolBar sizeToFit];
+        viewFrame.size.height = self.pickerModeToolBar.frame.size.height;
+        self.pickerModeToolBar.frame = viewFrame;
+        viewFrame.origin.y += viewFrame.size.height;
+    }
+
+    viewFrame.size = self.datePicker.frame.size;
+    self.datePicker.frame = viewFrame;
+
+    viewFrame.size.height += viewFrame.origin.y;
+    return viewFrame.size;
+}
 
 @end
