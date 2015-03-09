@@ -38,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3CC98E1E19388F6F0017A732 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		9E05670B19034A38001C7FD2 /* CommonLibraries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommonLibraries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E05670E19034A38001C7FD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9E05671019034A38001C7FD2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,13 +125,14 @@
 		9E05671619034A38001C7FD2 /* CommonLibraries */ = {
 			isa = PBXGroup;
 			children = (
-				9E05674B19036464001C7FD2 /* Views */,
-				9E05674419034AC5001C7FD2 /* ViewControllers */,
+				3CC98E1E19388F6F0017A732 /* CommonConst.h */,
+				9E05672219034A38001C7FD2 /* CommonLibraries.xcdatamodeld */,
 				9E05671F19034A38001C7FD2 /* HSAppDelegate.h */,
 				9E05672019034A38001C7FD2 /* HSAppDelegate.m */,
 				9E05672519034A38001C7FD2 /* Images.xcassets */,
-				9E05672219034A38001C7FD2 /* CommonLibraries.xcdatamodeld */,
 				9E05671719034A38001C7FD2 /* Supporting Files */,
+				9E05674419034AC5001C7FD2 /* ViewControllers */,
+				9E05674B19036464001C7FD2 /* Views */,
 			);
 			path = CommonLibraries;
 			sourceTree = "<group>";

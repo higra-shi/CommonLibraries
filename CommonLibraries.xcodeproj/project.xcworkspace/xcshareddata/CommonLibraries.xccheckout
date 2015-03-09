@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B5362ECE-7FE3-4971-96D4-0A8EAE0B66FC</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CommonLibraries</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>839D1D67-4E1B-4BF7-9EDE-1034E4C9CB0A</key>
+		<string>https://github.com/higra-shi/CommonLibraries.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CommonLibraries.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>839D1D67-4E1B-4BF7-9EDE-1034E4C9CB0A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/higra-shi/CommonLibraries.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>839D1D67-4E1B-4BF7-9EDE-1034E4C9CB0A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>839D1D67-4E1B-4BF7-9EDE-1034E4C9CB0A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CommonLibraries</string>
+		</dict>
+	</array>
+</dict>
+</plist>

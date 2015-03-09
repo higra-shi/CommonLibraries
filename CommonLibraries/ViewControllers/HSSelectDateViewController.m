@@ -7,6 +7,7 @@
 //
 
 #import "HSSelectDateViewController.h"
+#import "CommonConst.h"
 
 @interface HSSelectDateViewController () {
 }
@@ -202,7 +203,9 @@
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
+    
     CGRect viewFrame = CGRectZero;
+
     viewFrame.size = [self.selectDateView resizeView];
     viewFrame.origin.y = self.view.frame.size.height - viewFrame.size.height;
     self.selectDateView.frame = viewFrame;
